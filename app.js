@@ -6,14 +6,17 @@ require("./src/db/database");
 
 // router import
 const productsRouter = require("./src/products/products.router");
+const usersRouter = require("./src/users/users.router");
 
 const app = express();
 
+// Enable JSON and Cors
 app.use(express.json());
 app.use(cors());
 
 // routers
 app.use("/api/v1/products", productsRouter);
+app.use("/api/v1/users", usersRouter);
 
 app.get("/", (req, res) => {
   res.status(200).json({
