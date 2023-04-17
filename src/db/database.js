@@ -1,5 +1,5 @@
 const { Sequelize } = require("sequelize");
-const config = require("../config");
+const config = require("../utils/config");
 
 const db = new Sequelize({
   dialect: "postgres",
@@ -27,7 +27,7 @@ db.authenticate()
     console.error(err);
   });
 
-db.sync({ force:true })
+db.sync()
   .then(() => {
     console.log("💠 Database synced succesfully!");
   })
