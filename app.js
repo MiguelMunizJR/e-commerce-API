@@ -1,12 +1,13 @@
 const express = require("express");
 const cors = require("cors");
-const PORT = require("./src/config").port;
+const PORT = require("./src/utils/config").port;
 // Database Connection
 require("./src/db/database");
 
 // router import
 const productsRouter = require("./src/products/products.router");
 const usersRouter = require("./src/users/users.router");
+const authRouter = require("./src/auth/auth.router");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(cors());
 // routers
 app.use("/api/v1/products", productsRouter);
 app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/auth", authRouter);
 
 app.get("/", (req, res) => {
   res.status(200).json({
