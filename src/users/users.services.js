@@ -1,8 +1,7 @@
 const usersControllers = require("./users.controllers");
 
 const getAllUsers = (req, res) => {
-  usersControllers
-    .getAllUsers()
+  usersControllers.getAllUsers()
     .then((response) => {
       res.status(200).json(response);
     })
@@ -129,10 +128,92 @@ const deleteUser = (req, res) => {
     });
 };
 
+//? My User
+
+const getMyUser = (req, res) => {
+  const id = req.user.id;
+
+  usersControllers
+    .getUserById(id)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(400).json({ message: err.message });
+    });
+};
+
+const patchMyUser = (req, res) => {
+  const id = req.user.id;
+  const { email, password, firstName, lastName, birthday, phone, gender } = req.body;
+
+  if (firstName && lastName && email && password) {
+    usersControllers
+      .patchUser(id, {
+        email,
+        password,
+        firstName,
+        lastName,
+        birthday,
+        phone,
+        gender,
+      })
+      .then((response) => {
+        if (response[0] !== 0) {
+          res.status(200).json({
+            message: "User edited succesfully!",
+          });
+        } else {
+          res.status(400).json({
+            message: "Invalid ID",
+          });
+        }
+      })
+      .catch((err) => {
+        res.status(400).json({
+          message: err.message,
+        });
+      });
+  } else {
+    res.status(400).json({
+      message: "Missing data",
+      fields: {
+        email: "string",
+        password: "string",
+        firstName: "string",
+        lastName: "string",
+        birthday: "YYYY-MM-DD",
+        phone: "number",
+        gender: "string",
+      },
+    });
+  }
+};
+
+const deleteMyUser = (req, res) => {
+  const id = req.user.id;
+
+  usersControllers
+    .patchUser(id, { status: "inactive" })
+    .then(() => {
+      res.status(200).json({
+        message: "Your user was deleted succesfully!",
+      });
+    })
+    .catch((err) => {
+      res.status(400).json({
+        message: err.message,
+      });
+    });
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
   createUser,
   updateUser,
   deleteUser,
+  getMyUser,
+  patchMyUser,
+  deleteMyUser
 };

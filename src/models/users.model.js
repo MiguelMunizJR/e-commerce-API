@@ -33,7 +33,7 @@ const Users = db.define("users", {
     },
   },
   phone: {
-    type: Datatypes.INTEGER(10),
+    type: Datatypes.INTEGER,
     validate: {
       isNumeric: true,
     },
