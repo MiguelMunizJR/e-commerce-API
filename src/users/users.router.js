@@ -18,22 +18,6 @@ router
     adminValidate,
     usersServices.createUser
   );
-
-//TODO /api/v1/users/:id
-router
-  .route("/:id")
-  .get(usersServices.getUserById)
-  .patch(
-    passport.authenticate("jwt", { session: false }),
-    adminValidate,
-    usersServices.updateUser
-  )
-  .delete(
-    passport.authenticate("jwt", { session: false }),
-    adminValidate,
-    usersServices.deleteUser
-  );
-
 //TODO /api/v1/users/me
 router
   .route("/me")
@@ -48,6 +32,25 @@ router
   .delete(
     passport.authenticate("jwt", { session: false }),
     usersServices.deleteMyUser
+  );
+
+//TODO /api/v1/users/:id
+router
+  .route("/:id")
+  .get(
+    passport.authenticate("jwt", { session: false }),
+    adminValidate,
+    usersServices.getUserById
+  )
+  .patch(
+    passport.authenticate("jwt", { session: false }),
+    adminValidate,
+    usersServices.updateUser
+  )
+  .delete(
+    passport.authenticate("jwt", { session: false }),
+    adminValidate,
+    usersServices.deleteUser
   );
 
 module.exports = router;

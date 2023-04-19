@@ -37,7 +37,7 @@ const createUser = (req, res) => {
   const { email, password, firstName, lastName, birthday, phone, gender } =
     req.body;
 
-  if ((email, password, firstName, lastName, birthday, phone, gender)) {
+  if ((email, password)) {
     usersControllers
       .createUser({
         email,
@@ -61,12 +61,7 @@ const createUser = (req, res) => {
       message: "Missing data",
       fields: {
         email: "string",
-        password: "string",
-        firstName: "string",
-        lastName: "string",
-        birthday: "YYYY-MM-DD",
-        phone: "number",
-        gender: "string",
+        password: "string"
       },
     });
   }
@@ -129,7 +124,6 @@ const deleteUser = (req, res) => {
 };
 
 //? My User
-
 const getMyUser = (req, res) => {
   const id = req.user.id;
 

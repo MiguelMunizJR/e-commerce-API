@@ -29,15 +29,9 @@ const Users = db.define("users", {
   },
   birthday: {
     type: Datatypes.DATEONLY,
-    validate: {
-      isDate: true,
-    },
   },
   phone: {
-    type: Datatypes.DECIMAL(10),
-    validate: {
-      isNumeric: true,
-    },
+    type: Datatypes.DECIMAL,
   },
   gender: {
     type: Datatypes.STRING,

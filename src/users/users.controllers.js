@@ -11,6 +11,7 @@ const getUserById = async (id) => {
   const user = await UsersModel.findOne({
     where: {
       id,
+      status: "active",
     },
   });
   return user;
@@ -37,6 +38,7 @@ const createUser = async (data) => {
     phone: data.phone,
     gender: data.gender,
   });
+
   return user;
 };
 
