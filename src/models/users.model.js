@@ -13,6 +13,7 @@ const Users = db.define("users", {
     validate: {
       isEmail: true,
     },
+    unique: true
   },
   password: {
     type: Datatypes.STRING,

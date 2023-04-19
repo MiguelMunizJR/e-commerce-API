@@ -1,13 +1,31 @@
 const router = require("express").Router();
 const productsServices = require("./products.services");
+const adminValidate = require("../middlewares/role.middleware");
 
-router.route("/")
+const passport = require("passport");
+require("../middlewares/auth.middleware")(passport);
+
+router
+  .route("/")
   .get(productsServices.getAllProducts)
-  .post(productsServices.createProduct);
+  .post(
+    passport.authenticate("jwt", { session: false }),
+    adminValidate,
+    productsServices.createProduct
+  );
 
-router.route("/:id")
+router
+  .route("/:id")
   .get(productsServices.getProductById)
-  .patch(productsServices.updateProduct)
-  .delete(productsServices.deleteProduct);
+  .patch(
+    passport.authenticate("jwt", { session: false }),
+    adminValidate,
+    productsServices.updateProduct
+  )
+  .delete(
+    passport.authenticate("jwt", { session: false }),
+    adminValidate,
+    productsServices.deleteProduct
+  );
 
 module.exports = router;
