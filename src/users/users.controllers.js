@@ -1,9 +1,14 @@
 const UsersModel = require("../models/users.model");
 const UUID = require("uuid");
 const { hashPassword } = require("../utils/crypto");
+const CartModel = require("../models/cart.model");
 
 const getAllUsers = async () => {
-  const data = await UsersModel.findAll();
+  const data = await UsersModel.findAll({
+    include: {
+      model: CartModel
+    }
+  });
   return data;
 };
 
