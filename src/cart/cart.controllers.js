@@ -12,21 +12,31 @@ const createCart = async (userId) => {
   return cart;
 };
 
-const getCartProducts = async (cartId) => {
-  const cart = await CartModel.findByPk(cartId, {
+const getCartProducts = async (userId) => {
+  await createCart(userId);
+  const cart = await CartModel.findAll({
+    where: {
+      userId: userId,
+    },
     include: {
       model: ProductsModel,
     },
   });
+
+
   return cart;
 };
 
-const addProductToCart = async (cartId, productId, quantity) => {
-  const cart = await CartModel.findByPk(cartId);
-  const product = await ProductsModel.findByPk(productId);
+const addProductToCart = async (userId, productId) => {
+  const cart = await CartModel.findOne({ where: userId });
+  const product = await ProductsModel.findOne({
+    where: {
+      id: productId,
+    },
+  });
 
-  await cart.addProducts(product, { through: { quantity } });
-  return cart;
+  const productCart = await cart.addProduct(product);
+  return productCart;
 };
 
 module.exports = {
