@@ -9,8 +9,8 @@ router
   .route("/")
   .get(productsServices.getAllProducts)
   .post(
-    passport.authenticate("jwt", { session: false }),
-    adminValidate,
+    // passport.authenticate("jwt", { session: false }),
+    // adminValidate,
     productsServices.createProduct
   );
 
