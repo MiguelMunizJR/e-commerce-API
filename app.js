@@ -6,6 +6,8 @@ require("./src/db/database");
 //* import swagger.JSON
 const swaggerUI = require("swagger-ui-express");
 const swaggerDoc = require("./swagger.json");
+// Init models
+const initModels = require("./src/models/initModels");
 
 // router import
 const productsRouter = require("./src/products/products.router");
@@ -21,6 +23,9 @@ app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 // Enable JSON and Cors
 app.use(express.json());
 app.use(cors());
+
+// Init models sync
+initModels();
 
 // routers
 app.use("/api/v1/products", productsRouter);
