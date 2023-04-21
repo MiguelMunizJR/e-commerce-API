@@ -1,35 +1,35 @@
 const CartControllers = require("./cart.controllers");
 
-const createCart = (req, res) => {
+const addProductToCart = (req, res) => {
   const userId = req.user.id;
+  const { productId, quantity } = req.body;
 
-  if (!userId) {
-    res.status(400).json({
-      message: "You must first login.",
+  if (!userId || !productId) {
+    res.status(404).json({
+      message: "User or product not exist",
     });
   }
 
-  CartControllers.createCart(userId)
+  CartControllers.addProductToCart(userId, productId, quantity)
     .then((response) => {
       res.status(201).json(response);
     })
     .catch((err) => {
-      res.status(400).json({
-        message: err.message,
-      });
+      res.status(400).json({ message: err.message });
     });
+
 };
 
-const getCartProducts = (req, res) => {
+const getCart = (req, res) => {
   const userId = req.user.id;
 
   if (!userId) {
-    res.status(400).json({
+    res.status(404).json({
       message: "You must first login.",
     });
   }
 
-  CartControllers.getCartProducts(userId)
+  CartControllers.getCart(userId)
     .then((response) => {
       if (response) {
         res.status(200).json(response);
@@ -46,25 +46,7 @@ const getCartProducts = (req, res) => {
     });
 };
 
-const addProductToCart = (req, res) => {
-  const productId = req.body;
-  const userId = req.user.id;
-
-  if (!userId || !productId) {
-    return res.status(404).json({ message: "User or product not found" });
-  }
-
-  CartControllers.addProductToCart(userId, productId)
-    .then((response) => {
-      res.status(200).json(response);
-    })
-    .catch((err) => {
-      res.status(400).json({ message: err.message });
-    });
-};
-
 module.exports = {
-  createCart,
-  getCartProducts,
   addProductToCart,
+  getCart,
 };

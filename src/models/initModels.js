@@ -7,11 +7,8 @@ const initModels = () => {
   Users.hasMany(Cart);
   Cart.belongsTo(Users);
 
-  Cart.hasMany(CartProducts);
-  CartProducts.belongsTo(Cart);
-
-  Products.hasMany(CartProducts);
-  CartProducts.belongsTo(Products);
+  Cart.belongsToMany(Products,{ through: CartProducts });
+  Products.belongsToMany(Cart, { through: CartProducts });
 };
 
 module.exports = initModels;

@@ -16,6 +16,15 @@ const CartProducts = db.define(
       allowNull: false,
       defaultValue: 1
     },
+    productId: {
+      type: Datatypes.UUID,
+      allowNull: false,
+      field: "product_id",
+      references: {
+        key: "id",
+        model: ProductsModel
+      }
+    },
     cartId: {
       type: Datatypes.UUID,
       allowNull: false,
@@ -25,15 +34,6 @@ const CartProducts = db.define(
         model: CartModel
       }
     },
-    productId: {
-      type: Datatypes.UUID,
-      allowNull: false,
-      field: "product_id",
-      references: {
-        key: "id",
-        model: ProductsModel
-      }
-    }
   },
   {
     timestamps: false,
