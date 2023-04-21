@@ -1,6 +1,6 @@
 const CartModel = require("../models/cart.model");
 const ProductsModel = require("../models/products.model");
-const CartProductModel = require("../models/cartProducts.model");
+const CartProductsModel = require("../models/cartProducts.model");
 const UUID = require("uuid");
 
 // Obtener el carrito
@@ -8,22 +8,34 @@ const getCart = async (userId) => {
   // Buscamos el carrito del usuario actual
   let cart = await CartModel.findOne({
     where: { userId },
+    attributes: ["id", "userId", "total", "status"],
     include: {
       model: ProductsModel,
       as: "products",
       attributes: ["id", "title", "price", "description", "category", "image"],
-      through: { attributes: ["quantity"] }
-    }
+      through: {
+        as: "quantity",
+        attributes: ["quantity"]
+      },
+    },
   });
   // Si el usuario no tiene un carrito, creamos uno nuevo
   if (!cart) {
     cart = await CartModel.create({
       id: UUID.v4(),
       userId,
-      total: 0,
       status: "open",
     });
   }
+
+  let total = 0;
+
+  await cart.products?.forEach(product => {
+    total += Number(product?.price) * Number(product?.quantity?.quantity);
+  });
+
+  cart.total = total;
+  cart.save();
   return cart;
 };
 
@@ -41,23 +53,22 @@ const addProductToCart = async (userId, productId, quantity) => {
     cart = await CartModel.create({
       id: UUID.v4(),
       userId,
-      total: 0,
       status: "open",
     });
   }
   // Verificar si el producto ya existe en el carrito
-  let cartProduct = await CartProductModel.findOne({
+  let cartProduct = await CartProductsModel.findOne({
     where: {
-      cartId: cart.id,
+      cartId: cart?.id,
       productId,
     },
   });
   // Si el producto no está en el carrito, lo agregamos
   if (!cartProduct) {
-    cartProduct = await CartProductModel.create({
+    cartProduct = await CartProductsModel.create({
       id: UUID.v4(),
       quantity,
-      cartId: cart.id,
+      cartId: cart?.id,
       productId,
     });
   } else {
@@ -65,6 +76,7 @@ const addProductToCart = async (userId, productId, quantity) => {
     cartProduct.quantity += quantity;
     await cartProduct.save();
   }
+  return cartProduct;
 };
 
 module.exports = {
