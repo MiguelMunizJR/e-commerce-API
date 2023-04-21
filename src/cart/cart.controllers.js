@@ -74,8 +74,8 @@ const addProductToCart = async (userId, productId, quantity) => {
   } else {
     // Si el producto ya está en el carrito, actualizar la cantidad
     cartProduct.quantity += quantity;
-    await cartProduct.save();
   }
+  await cartProduct.save();
   return cartProduct;
 };
 
