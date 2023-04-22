@@ -7,11 +7,7 @@ const getAllProducts = async () => {
 };
 
 const getProductById = async (id) => {
-  const data = await Products.findOne({
-    where: {
-      id,
-    },
-  });
+  const data = await Products.findByPk(id);
   return data;
 };
 
