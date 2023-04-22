@@ -1,6 +1,6 @@
 const CartModel = require("../models/cart.model");
 const ProductsModel = require("../models/products.model");
-const CartProductsModel = require("../models/cartProducts.model");
+const CartProductsModel = require("../models/cart_products.model");
 const UUID = require("uuid");
 
 // Obtener el carrito

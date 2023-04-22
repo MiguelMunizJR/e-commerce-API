@@ -1,5 +1,5 @@
 const Cart = require("./cart.model");
-const CartProducts = require("./cartProducts.model");
+const CartProducts = require("./cart_products.model");
 const Products = require("./products.model");
 
 const initModels = () => {
