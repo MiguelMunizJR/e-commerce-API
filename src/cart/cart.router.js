@@ -13,4 +13,14 @@ router.route("/")
     CartServices.addProductToCart
   );
 
+router.route("/:id")
+  .patch(
+    passport.authenticate("jwt", { session: false }),
+    CartServices.updateQuantity
+  )
+  .delete(
+    passport.authenticate("jwt", { session: false }),
+    CartServices.removeProduct
+  );
+
 module.exports = router;

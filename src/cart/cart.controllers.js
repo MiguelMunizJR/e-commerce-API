@@ -15,7 +15,7 @@ const getCart = async (userId) => {
       attributes: ["id", "title", "price", "description", "category", "image"],
       through: {
         as: "quantity",
-        attributes: ["quantity"]
+        attributes: ["quantity"],
       },
     },
   });
@@ -30,7 +30,7 @@ const getCart = async (userId) => {
 
   let total = 0;
 
-  await cart.products?.forEach(product => {
+  await cart.products?.forEach((product) => {
     total += Number(product?.price) * Number(product?.quantity?.quantity);
   });
 
@@ -79,7 +79,33 @@ const addProductToCart = async (userId, productId, quantity) => {
   return cartProduct;
 };
 
+const updateQuantity = async (productId, quantity) => {
+  const product = await CartProductsModel.update(
+    {
+      quantity,
+    },
+    {
+      where: {
+        id: productId,
+      },
+    }
+  );
+
+  return product;
+};
+
+const removeProduct = async (productId) => {
+  const productDeleted = await CartProductsModel.destroy({
+    where: {
+      id: productId
+    }
+  });
+  return productDeleted;
+};
+
 module.exports = {
   getCart,
   addProductToCart,
+  removeProduct,
+  updateQuantity,
 };
