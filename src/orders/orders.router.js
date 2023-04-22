@@ -4,7 +4,10 @@ const passport = require("passport");
 require("../middlewares/auth.middleware")(passport);
 
 router.route("/")
-  .get()
+  .get(
+    passport.authenticate("jwt", { session: false }),
+    OrdersServices.getAllOrders
+  )
   .post(
     passport.authenticate("jwt", { session: false }),
     OrdersServices.createOrder

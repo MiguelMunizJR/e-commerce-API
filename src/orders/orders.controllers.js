@@ -5,9 +5,38 @@ const OrderProductModel = require("../models/orders_products.model");
 const ProductsModel = require("../models/products.model");
 const UUID = require("uuid");
 
+const getAllOrders = async () => {
+  const orders = await OrdersModel.findAll({
+    include: {
+      model: OrderProductModel,
+    },
+  });
+  return orders;
+};
+
 const createOrder = async (userId, cartId) => {
   // Buscamos el carrito por su id
-  const cart = await CartModel.findByPk(cartId);
+  const cart = await CartModel.findOne({
+    where: {
+      id: cartId,
+    },
+  });
+
+  let date = new Date();
+  // Obtener la fecha actual en formato de cadena sin la zona horaria
+  let dateWithoutTimeZone = date
+    .toISOString()
+    .slice(0, 10)
+    .replace("T", " ");
+
+  console.log(dateWithoutTimeZone);
+
+  // Obtener la hora actual en formato de cadena sin la zona horaria
+  let timeWithoutTimeZone = date.toLocaleTimeString([], {
+    hour12: true,
+  });
+
+  let formattedDate = `${dateWithoutTimeZone} ${timeWithoutTimeZone}`;
 
   // Creamos una nueva orden
   const order = await OrdersModel.create({
@@ -15,7 +44,7 @@ const createOrder = async (userId, cartId) => {
     total: Number(cart?.total),
     userId,
     status: "completed",
-    date: new Date().toISOString(),
+    date: formattedDate,
   });
 
   // Buscamos el carrito con todos los productos
@@ -47,4 +76,5 @@ const createOrder = async (userId, cartId) => {
 
 module.exports = {
   createOrder,
+  getAllOrders,
 };
