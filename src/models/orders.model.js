@@ -27,7 +27,7 @@ const Orders = db.define("orders", {
     defaultValue: "pending"
   },
   date: {
-    type: Datatypes.DATEONLY,
+    type: Datatypes.STRING,
     allowNull: false
   }
 });
