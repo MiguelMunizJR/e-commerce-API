@@ -82,12 +82,10 @@ const addProductToCart = async (userId, productId, quantity) => {
 const updateQuantity = async (productId, quantity) => {
   const product = await CartProductsModel.update(
     {
-      quantity,
+      quantity: Number(quantity),
     },
     {
-      where: {
-        id: productId,
-      },
+      where: { productId },
     }
   );
 
@@ -96,9 +94,7 @@ const updateQuantity = async (productId, quantity) => {
 
 const removeProduct = async (productId) => {
   const productDeleted = await CartProductsModel.destroy({
-    where: {
-      id: productId
-    }
+    where: { productId },
   });
   return productDeleted;
 };

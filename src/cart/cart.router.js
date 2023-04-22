@@ -3,9 +3,10 @@ const CartServices = require("./cart.services");
 const passport = require("passport");
 require("../middlewares/auth.middleware")(passport);
 
-router.route("/")
+router
+  .route("/")
   .get(
-    passport.authenticate("jwt", { session: false }),
+    passport.authenticate("jwt", { session: false }), 
     CartServices.getCart
   )
   .post(
@@ -13,7 +14,8 @@ router.route("/")
     CartServices.addProductToCart
   );
 
-router.route("/:id")
+router
+  .route("/:id")
   .patch(
     passport.authenticate("jwt", { session: false }),
     CartServices.updateQuantity

@@ -9,8 +9,8 @@ const addProductToCart = (req, res) => {
       message: "Missing Data",
       fields: {
         productId: "UUID",
-        quantity: "Integer"
-      }
+        quantity: "Integer",
+      },
     });
   }
 
@@ -23,7 +23,6 @@ const addProductToCart = (req, res) => {
     .catch((err) => {
       res.status(400).json({ message: err.message });
     });
-
 };
 
 const getCart = (req, res) => {
@@ -59,19 +58,20 @@ const updateQuantity = (req, res) => {
   const productId = req.params.id;
 
   if (!productId || !quantity) {
-    res.status(400).json({ 
+    res.status(400).json({
       message: "Missing data",
       fields: {
-        productId: "UUID",
-        quantity: "integer"
-      }
+        quantity: "integer",
+      },
     });
   }
 
   CartControllers.updateQuantity(productId, quantity)
     .then((response) => {
       if (response[0]) {
-        res.status(200).json({message: `User with ID: ${productId}, edited succesfully!`});
+        res
+          .status(200)
+          .json({ message: `User with ID: ${productId}, edited succesfully!` });
       } else {
         res.status(404).json({ message: "Invalid product id" });
       }
@@ -85,18 +85,22 @@ const removeProduct = (req, res) => {
   const productId = req.params.id;
 
   if (!productId) {
-    res.status(400).json({ 
+    res.status(400).json({
       message: "Missing data",
       fields: {
-        productId: "UUID"
-      }
+        productId: "UUID",
+      },
     });
   }
 
   CartControllers.removeProduct(productId)
     .then((response) => {
       if (response) {
-        res.status(200).json({ message: `Product with ID: ${productId}, removed succesfully!`});
+        res
+          .status(200)
+          .json({
+            message: `Product with ID: ${productId}, removed succesfully!`,
+          });
       } else {
         res.status(404).json({ message: "Invalid product id" });
       }
@@ -110,5 +114,5 @@ module.exports = {
   addProductToCart,
   getCart,
   updateQuantity,
-  removeProduct
+  removeProduct,
 };
