@@ -13,6 +13,7 @@ const initModels = require("./src/models/initModels");
 const productsRouter = require("./src/products/products.router");
 const usersRouter = require("./src/users/users.router");
 const cartRouter = require("./src/cart/cart.router");
+const ordersRouter = require("./src/orders/orders.router");
 const authRouter = require("./src/auth/auth.router");
 
 const app = express();
@@ -31,6 +32,7 @@ initModels();
 app.use("/api/v1/products", productsRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/cart", cartRouter);
+app.use("/api/v1/orders", ordersRouter);
 app.use("/api/v1/auth", authRouter);
 
 app.get("/", (req, res) => {
