@@ -1,7 +1,9 @@
 const OrdersControllers = require("./orders.controllers");
 
 const getAllOrders = (req, res) => {
-  OrdersControllers.getAllOrders()
+  const userId = req.user.id;
+
+  OrdersControllers.getAllOrders(userId)
     .then((response) => {
       res.status(200).json(response);
     })
@@ -26,7 +28,11 @@ const createOrder = (req, res) => {
 
   OrdersControllers.createOrder(userId, cartId)
     .then((response) => {
-      res.status(201).json(response);
+      if (!response.products?.length === 0) {
+        res.status(201).json(response);
+      } else {
+        res.status(400).json({message: "Empty cart"});
+      }
     })
     .catch((err) => {
       res.status(400).json({ message: err.message });

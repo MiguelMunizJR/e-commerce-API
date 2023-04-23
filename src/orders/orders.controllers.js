@@ -5,10 +5,19 @@ const OrderProductModel = require("../models/orders_products.model");
 const ProductsModel = require("../models/products.model");
 const UUID = require("uuid");
 
-const getAllOrders = async () => {
+const getAllOrders = async (userId) => {
   const orders = await OrdersModel.findAll({
+    where: { 
+      userId: userId
+    },
+    attributes: {
+      exclude: ["productId"]
+    },
     include: {
-      model: OrderProductModel,
+      model: ProductsModel,
+      // through: OrderProductModel,
+      as: "products",
+      attributes: ["id", "title", "price", "description", "category"]
     },
   });
   return orders;
@@ -20,18 +29,18 @@ const createOrder = async (userId, cartId) => {
     where: {
       id: cartId,
     },
+    include: {
+      model: ProductsModel,
+      through: CartProductsModel,
+      as: "products"
+    }
   });
 
   let date = new Date();
-  // Obtener la fecha actual en formato de cadena sin la zona horaria
-  let dateWithoutTimeZone = date
-    .toISOString()
-    .slice(0, 10)
-    .replace("T", " ");
+  // Obtener la fecha actual en string sin la zona horaria
+  let dateWithoutTimeZone = date.toISOString().slice(0, 10).replace("T", " ");
 
-  console.log(dateWithoutTimeZone);
-
-  // Obtener la hora actual en formato de cadena sin la zona horaria
+  // Obtener la hora actual en string sin la zona horaria
   let timeWithoutTimeZone = date.toLocaleTimeString([], {
     hour12: true,
   });
@@ -47,23 +56,16 @@ const createOrder = async (userId, cartId) => {
     date: formattedDate,
   });
 
-  // Buscamos el carrito con todos los productos
-  const cartProducts = await CartProductsModel.findAll({
-    where: {
-      cartId: cart?.id,
-    },
-    include: {
-      model: ProductsModel,
-    },
-  });
+  // return cart?.products;
+
 
   // Asociamos los productos a la nueva orden
-  const orderProducts = cartProducts.map((product) => ({
+  const orderProducts = cart?.products?.map((product) => ({
     id: UUID.v4(),
     orderId: order?.id,
     productId: product?.id,
-    quantity: product?.quantity,
-    price: product?.price,
+    quantity: cart?.products?.length,
+    price: cart?.total,
   }));
 
   // Agregamos productos a la nueva orden
