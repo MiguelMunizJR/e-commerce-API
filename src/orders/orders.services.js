@@ -5,13 +5,16 @@ const getAllOrders = (req, res) => {
 
   OrdersControllers.getAllOrders(userId)
     .then((response) => {
-      res.status(200).json(response);
+      res.status(200).json({
+        userId: userId,
+        length: response.length,
+        orders: response,
+      });
     })
     .catch((err) => {
       res.status(400).json({ message: err.message });
     });
 };
-
 
 const createOrder = (req, res) => {
   const userId = req.user.id;
@@ -28,10 +31,10 @@ const createOrder = (req, res) => {
 
   OrdersControllers.createOrder(userId, cartId)
     .then((response) => {
-      if (!response.products?.length === 0) {
-        res.status(201).json(response);
+      if (response) {
+        res.status(201).json({response});
       } else {
-        res.status(400).json({message: "Empty cart"});
+        res.status(404).json({ message: "Empty cart" });
       }
     })
     .catch((err) => {

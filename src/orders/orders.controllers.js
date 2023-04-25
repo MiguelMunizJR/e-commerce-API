@@ -35,17 +35,20 @@ const createOrder = async (userId, cartId) => {
       as: "products"
     }
   });
+  // Validations
+  if (cart?.id !== cartId) return cart?.id;
+  if (cart?.products.length === 0) return;
 
-  let date = new Date();
+  const date = new Date();
   // Obtener la fecha actual en string sin la zona horaria
-  let dateWithoutTimeZone = date.toISOString().slice(0, 10).replace("T", " ");
+  const dateWithoutTimeZone = date.toISOString().slice(0, 10).replace("T", " ");
 
   // Obtener la hora actual en string sin la zona horaria
-  let timeWithoutTimeZone = date.toLocaleTimeString([], {
+  const timeWithoutTimeZone = date.toLocaleTimeString([], {
     hour12: true,
   });
 
-  let formattedDate = `${dateWithoutTimeZone} ${timeWithoutTimeZone}`;
+  const formattedDate = `${dateWithoutTimeZone} ${timeWithoutTimeZone}`;
 
   // Creamos una nueva orden
   const order = await OrdersModel.create({
@@ -55,9 +58,6 @@ const createOrder = async (userId, cartId) => {
     status: "completed",
     date: formattedDate,
   });
-
-  // return cart?.products;
-
 
   // Asociamos los productos a la nueva orden
   const orderProducts = cart?.products?.map((product) => ({

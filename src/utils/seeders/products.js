@@ -256,4 +256,4 @@ const productsSmartphones = [
   },
 ];
 
-Products.bulkCreate(productsSmartphones);
+// Products.bulkCreate(productsSmartphones);
