@@ -1,7 +1,9 @@
 const Products = require("../../models/products.model");
 const UUID = require("uuid");
 
-const productsSeeds = [
+// WalkMAnrt :D
+
+const productsSmartTV = [
   {
     id: UUID.v4(),
     title: "TV Samsung 55 Pulgadas 4K Ultra HD Smart TV LED UN55AU7000FXZX",
@@ -84,4 +86,45 @@ const productsSeeds = [
   },
 ];
 
-Products.bulkCreate(productsSeeds);
+// Products.bulkCreate(productsSmartTV);
+
+const productsLaptops = [
+  {
+    id: UUID.v4(),
+    title: "Lenovo ThinkPad E14 Gen2 Core i5-1135g7, 8Gb Ram 256Gb SSD",
+    price: 18999,
+    description: "Procesador:  Intel® Core™ i5-1135G7. Sistema operativo: Windows 10 Pro. Pantalla: 14” FHD (1920x1080), IPS, 250 nits, antirreflejos. Memoria: 8GB DDR4-3200. Batería: 45Wh. Suporta Rapid Charge (hasta el 80% de carga en 1 hora) MobileMark® 2014: Hasta 11.9 horas de duraciónMobileMark® 2018: 8.7 horas de duración.",
+    category: "Laptops",
+    image: ""
+  },
+  {
+    id: UUID.v4(),
+    title: "Lenovo Flex 5 14 FHD Touch Display Ryzen 5 5500U 16GB RAM DDR4 256GB SSD",
+    price: 14599,
+    description: "Con los últimos procesadores AMD Ryzen serie 5 U y 16 GB de RAM DDR4, estás jugando con la creación de contenido de élite y el rendimiento de clase para juegos. Almacena más datos más rápido con almacenamiento SSD de 512 GB y mantén tu PC fresco y silencioso incluso bajo cargas pesadas con refrigeración inteligente, lo que te permite cambiar entre velocidades del ventilador para maximizar el silencioso, rendimiento o un equilibrio. Despierta tus sentidos a una velocidad refrescante, con la confianza de desconectar y ir más lejos. Los nuevos procesadores AMD Ryzen serie 5000 dan vida a tus experiencias, ofreciendo todo lo que necesitas y mucho más.",
+    image: ""
+  },
+  {
+    id: UUID.v4(),
+    title: "Acer Nitro 5 15.6 AN515-58-525P i5-12500H GeForce RTX 3050 8GB DDR4",
+    price: 18500,
+    description: "Enciéndelo y luego acelera el ritmo más rápido y eficaz que nunca con la próxima evolución de Acer de su portátil gaming Nitro 5. El Nitro 5 se eleva a nuevos niveles de rendimiento para jugadores y creadores, cortesía de su procesador Intel Core de 12ª generación y gráficos NVIDIA GeForce RTX 3050, con la arquitectura RTX de Ampere NVIDIA! A continuación, incorpora la visualización Full HD de 15,6 de 15,6 con un panel IPS de 144 Hz, una amplia refrigeración y un teclado retroiluminado rojo y podrás ver por qué el Nitro 5 es un éxito perfecto para los jugadores de todos los niveles. ",
+    image: ""
+  },
+  {
+    id: UUID.v4(),
+    title: "MSI Laptop 15.6 GF6311UD-232MX i5-11400H NVIDIA GeForce RTX3050 8GB DDR4",
+    price: 22599,
+    description: "Enciéndelo y luego acelera el ritmo más rápido y eficaz que nunca con la próxima evolución de MSI Laptop Gaming. MSI Gaming se eleva a nuevos niveles de rendimiento para jugadores y creadores, cortesía de su procesador Intel Core de 11ª generación y gráficos NVIDIA GeForce RTX 3050, con la arquitectura RTX de Ampere NVIDIA! A continuación, incorpora la visualización Full HD de 15,6 de 15,6 con un panel Amoled de 144 Hz, una amplia refrigeración y un teclado retroiluminado rojo y podrás ver por qué MSI Gaming Laptop es un éxito perfecto para los jugadores de todos los niveles.",
+    image: ""
+  },
+  {
+    id: UUID.v4(),
+    title: "Lenovo IdeaPad 3 FHD 14 Intel Core i7-1165G7 20GB DDR4 1TB SSD",
+    price: 14000,
+    description: "Procesador: Intel Core i7-1165G7 (4 núcleos, 8 hilos, caché de 12 MB, frecuencia base a 2.8 GHz, hasta 4.7 GHz) con gráficos Intel Iris Xe. RAM de alta velocidad y espacio enorme: 20 GB de RAM de alto ancho de banda para ejecutar sin problemas múltiples aplicaciones y pestañas del navegador, todo a la vez; la unidad de estado sólido PCIe NVMe M.2 de 1 TB permite un arranque rápido y transferencia de datos. Especificaciones técnicas: 1 USB-A 2.0, 1 lector de tarjetas SD, 1 combo de auriculares/micrófono, 1 USB-C 3.2 Gen 1, 1 HDMI, 1 USB-A 3.2 Gen 1; Wi-Fi 6 y Bluetooth 5.0; lector de huellas dactilares.",
+    image: ""
+  },
+];
+
+// Products.bulkCreate(productsLaptops);
