@@ -7,17 +7,17 @@ const UUID = require("uuid");
 
 const getAllOrders = async (userId) => {
   const orders = await OrdersModel.findAll({
-    where: { 
-      userId: userId
+    where: {
+      userId: userId,
     },
     attributes: {
-      exclude: ["productId"]
+      exclude: ["productId"],
     },
     include: {
       model: ProductsModel,
       // through: OrderProductModel,
       as: "products",
-      attributes: ["id", "title", "price", "description", "category"]
+      attributes: ["id", "title", "price", "description", "category"],
     },
   });
   return orders;
@@ -32,12 +32,11 @@ const createOrder = async (userId, cartId) => {
     include: {
       model: ProductsModel,
       through: CartProductsModel,
-      as: "products"
-    }
+      as: "products",
+    },
   });
-  // Validations
-  if (cart?.id !== cartId) return cart?.id;
-  if (cart?.products.length === 0) return;
+
+  if (cart?.id !== cartId) return;
 
   const date = new Date();
   // Obtener la fecha actual en string sin la zona horaria
@@ -51,29 +50,33 @@ const createOrder = async (userId, cartId) => {
   const formattedDate = `${dateWithoutTimeZone} ${timeWithoutTimeZone}`;
 
   // Creamos una nueva orden
-  const order = await OrdersModel.create({
-    id: UUID.v4(),
-    total: Number(cart?.total),
-    userId,
-    status: "completed",
-    date: formattedDate,
-  });
+  if (cart?.products?.length !== 0) {
+    const order = await OrdersModel.create({
+      id: UUID.v4(),
+      total: Number(cart?.total),
+      userId,
+      status: "completed",
+      date: formattedDate,
+    });
 
-  // Asociamos los productos a la nueva orden
-  const orderProducts = cart?.products?.map((product) => ({
-    id: UUID.v4(),
-    orderId: order?.id,
-    productId: product?.id,
-    quantity: cart?.products?.length,
-    price: cart?.total,
-  }));
+    // Asociamos los productos a la nueva orden
+    const orderProducts = cart?.products?.map((product) => ({
+      id: UUID.v4(),
+      orderId: order?.id,
+      productId: product?.id,
+      quantity: cart?.products?.length,
+      price: cart?.total,
+    }));
 
-  // Agregamos productos a la nueva orden
-  await OrderProductModel.bulkCreate(orderProducts);
+    // Agregamos productos a la nueva orden
+    await OrderProductModel.bulkCreate(orderProducts);
 
-  // Eliminamos los productos del carrito
-  await CartProductsModel.destroy({ where: { cartId } });
-  return orderProducts;
+    // Eliminamos los productos del carrito
+    await CartProductsModel.destroy({ where: { cartId } });
+    return orderProducts;
+  } else {
+    return [];
+  }
 };
 
 module.exports = {

@@ -32,9 +32,12 @@ const createOrder = (req, res) => {
   OrdersControllers.createOrder(userId, cartId)
     .then((response) => {
       if (response) {
-        res.status(201).json({response});
+        if (response?.length !== 0) {
+          res.status(201).json(response);
+        } else {
+          res.status(400).json({message: "Empty cart"});        }
       } else {
-        res.status(404).json({ message: "Empty cart" });
+        res.status(404).json({ message: "Cart not found" });
       }
     })
     .catch((err) => {
