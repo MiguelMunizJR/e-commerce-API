@@ -9,7 +9,7 @@
       "email": "miguelmunizb@hotmail.com"
     }
   },
-  "host": "http://localhost:8001/api/v1",
+  "host": "http://localhost:8001/api/v1/",
   "tags": [
     {
       "name": "users",
@@ -36,11 +36,11 @@
       }
     },
     {
-      "name": "purchases",
-      "description": "Everything about your purchases",
+      "name": "orders",
+      "description": "Everything about your orders",
       "externalDocs": {
         "description": "Find out more",
-        "url": "http://localhost:8001/api/v1/purchases"
+        "url": "http://localhost:8001/api/v1/orders"
       }
     }
   ],
@@ -817,157 +817,17 @@
       }
     }
   },
-  "securityDefinitions": {
-    "api_key": {
-      "type": "apiKey",
-      "name": "api_key",
-      "in": "header"
-    },
-    "petstore_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "https://petstore.swagger.io/oauth/authorize",
-      "flow": "implicit",
-      "scopes": {
-        "read:pets": "read your pets",
-        "write:pets": "modify pets in your account"
-      }
-    }
-  },
   "definitions": {
-    "ApiResponse": {
+    "Users": {
       "type": "object",
       "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
+        "id": {
+          "type": "UUID"
         },
-        "type": {
+        "email": {
           "type": "string"
         },
-        "message": {
-          "type": "string"
-        }
-      }
-    },
-    "Category": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "Category"
-      }
-    },
-    "Pet": {
-      "type": "object",
-      "required": ["name", "photoUrls"],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "category": {
-          "$ref": "#/definitions/Category"
-        },
-        "name": {
-          "type": "string",
-          "example": "doggie"
-        },
-        "photoUrls": {
-          "type": "array",
-          "xml": {
-            "wrapped": true
-          },
-          "items": {
-            "type": "string",
-            "xml": {
-              "name": "photoUrl"
-            }
-          }
-        },
-        "tags": {
-          "type": "array",
-          "xml": {
-            "wrapped": true
-          },
-          "items": {
-            "xml": {
-              "name": "tag"
-            },
-            "$ref": "#/definitions/Tag"
-          }
-        },
-        "status": {
-          "type": "string",
-          "description": "pet status in the store",
-          "enum": ["available", "pending", "sold"]
-        }
-      },
-      "xml": {
-        "name": "Pet"
-      }
-    },
-    "Tag": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "Tag"
-      }
-    },
-    "Order": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "petId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "quantity": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "shipDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "status": {
-          "type": "string",
-          "description": "Order Status",
-          "enum": ["placed", "approved", "delivered"]
-        },
-        "complete": {
-          "type": "boolean"
-        }
-      },
-      "xml": {
-        "name": "Order"
-      }
-    },
-    "User": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "username": {
+        "password": {
           "type": "string"
         },
         "firstName": {
@@ -976,28 +836,105 @@
         "lastName": {
           "type": "string"
         },
-        "email": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
+        "birthday": {
+          "type": "date",
+          "format": "YYYY-MM-DD",
+          "example": "1998-03-10"
         },
         "phone": {
-          "type": "string"
-        },
-        "userStatus": {
           "type": "integer",
-          "format": "int32",
-          "description": "User Status"
+          "description": "10-digit phone number",
+          "example": "3344556685"
+        },
+        "gender": {
+          "type": "string",
+          "description": "male or female",
+          "enum": ["male", "female"]
         }
       },
       "xml": {
-        "name": "User"
+        "name": "Users"
+      }
+    },
+    "Products": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "UUID"
+        },
+        "title": {
+          "type": "string"
+        },
+        "price": {
+          "type": "float"
+        },
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string",
+          "description": "Image URL",
+          "example": "https://example.com/"
+        }
+      },
+      "xml": {
+        "name": "Products"
+      }
+    },
+    "Cart": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "UUID"
+        },
+        "userId": {
+          "type": "UUID",
+          "description": "User foreign key"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "default": "open",
+          "enum": ["open", "closed"]
+        }
+      },
+      "xml": {
+        "name": "Cart"
+      }
+    },
+    "Orders": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "UUID"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "UUID",
+          "description": "User foreign key"
+        },
+        "status": {
+          "type": "string",
+          "default": "pending",
+          "enum": ["pending", "complete"]
+        },
+        "date": {
+          "type": "date",
+          "example": "YYYY-MM-DD"
+        }
+      },
+      "xml": {
+        "name": "Orders"
       }
     }
-  },
-  "externalDocs": {
-    "description": "Find out more about Swagger",
-    "url": "http://swagger.io"
   }
 }
