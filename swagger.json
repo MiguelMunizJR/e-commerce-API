@@ -62,64 +62,50 @@
           },
           {
             "name": "email",
-            "in": "body",
+            "in": "path",
             "description": "Email of user",
             "required": true,
             "type": "string"
           },
           {
             "name": "password",
-            "in": "body",
+            "in": "path",
             "description": "password of user",
             "required": true,
             "type": "string"
           },
           {
             "name": "first name",
-            "in": "body",
+            "in": "path",
             "description": "first name of user",
             "required": false,
             "type": "string"
           },
           {
             "name": "last name",
-            "in": "body",
+            "in": "path",
             "description": "last name of user",
             "required": false,
             "type": "string"
           },
           {
             "name": "birthday",
-            "in": "body",
+            "in": "path",
             "description": "birthday of user",
             "required": false,
             "type": "date"
           },
           {
             "name": "phone",
-            "in": "body",
+            "in": "path",
             "description": "phone of user",
             "required": false,
             "type": "integer"
           },
           {
             "name": "gender",
-            "in": "body",
+            "in": "path",
             "description": "gender of user",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "status",
-            "in": "path",
-            "description": "status of user",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "role",
-            "in": "path",
-            "description": "role of user",
             "required": false,
             "type": "string"
           }
@@ -127,15 +113,17 @@
         "responses": {
           "200": {
             "description": "successful operation",
-            "schema": {
-              
-            }
+            "schema": {}
+          },
+          "400": {
+            "description": "error operation",
+            "schema": {}
           }
         }
       },
       "patch": {
         "tags": ["users"],
-        "summary": "Patch the user info",
+        "summary": "Patch my user info",
         "consumes": ["multipart/form-data"],
         "produces": ["application/json"],
         "parameters": [
@@ -143,7 +131,7 @@
             "name": "password",
             "in": "path",
             "description": "password of user",
-            "required": true,
+            "required": false,
             "type": "string"
           },
           {
@@ -185,9 +173,72 @@
         "responses": {
           "200": {
             "description": "successful operation",
-            "schema": {
-              
-            }
+            "schema": {}
+          },
+          "400": {
+            "description": "error operation",
+            "schema": {}
+          }
+        }
+      }
+    },
+      "delete": {
+        "tags": ["users"],
+        "summary": "delete my user",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "password",
+            "in": "path",
+            "description": "password of user",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "first name",
+            "in": "path",
+            "description": "first name of user",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "last name",
+            "in": "path",
+            "description": "last name of user",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "birthday",
+            "in": "path",
+            "description": "birthday of user",
+            "required": false,
+            "type": "date"
+          },
+          {
+            "name": "phone",
+            "in": "",
+            "description": "phone of user",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "gender",
+            "in": "path",
+            "description": "gender of user",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {}
+          },
+          "400": {
+            "description": "error operation",
+            "schema": {}
           }
         }
       }
