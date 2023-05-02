@@ -8,15 +8,15 @@ const db = new Sequelize({
   password: config.db.password,
   database: config.db.database,
   //? Opciones para conexion con DB en produccion
-  // dialectOptions:
-  //   process.env.NODE_ENV === "production"
-  //     ? {
-  //       ssl: {
-  //         require: true,
-  //         rejectUnauthorized: false,
-  //       },
-  //     }
-  //     : {},
+  dialectOptions:
+    process.env.NODE_ENV === "production"
+      ? {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      }
+      : {},
 });
 
 db.authenticate()
