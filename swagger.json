@@ -180,8 +180,7 @@
             "schema": {}
           }
         }
-      }
-    },
+      },
       "delete": {
         "tags": ["users"],
         "summary": "delete my user",
