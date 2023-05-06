@@ -18,7 +18,13 @@ const addProductToCart = (req, res) => {
 
   CartControllers.addProductToCart(userId, productId, quantity)
     .then((response) => {
-      res.status(201).json(response);
+      if (response) {
+        res.status(201).json(response);
+      } else {
+        res.status(404).json({
+          message: "Product not found"
+        });
+      }
     })
     .catch((err) => {
       res.status(400).json({ message: err.message });
@@ -38,7 +44,7 @@ const getCart = (req, res) => {
     .then((response) => {
       if (response) {
         res.status(200).json({
-          data: response,
+          cart: response,
         });
       } else {
         res.status(404).json({
