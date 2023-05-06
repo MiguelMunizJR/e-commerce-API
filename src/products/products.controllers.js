@@ -1,18 +1,18 @@
-const Products = require("../models/products.model");
+const ProductsModel = require("../models/products.model");
 const UUID = require("uuid");
 
 const getAllProducts = async () => {
-  const data = await Products.findAll();
+  const data = await ProductsModel.findAll();
   return data;
 };
 
 const getProductById = async (id) => {
-  const data = await Products.findByPk(id);
+  const data = await ProductsModel.findOne({ where: id });
   return data;
 };
 
 const getProductByCategory = async (category) => {
-  const data = await Products.findOne({
+  const data = await ProductsModel.findOne({
     where: {
       category,
     },
@@ -21,7 +21,7 @@ const getProductByCategory = async (category) => {
 };
 
 const createProduct = async (data) => {
-  const product = await Products.create({
+  const product = await ProductsModel.create({
     id: UUID.v4(),
     title: data.title,
     price: data.price,
@@ -33,7 +33,7 @@ const createProduct = async (data) => {
 };
 
 const patchProduct = async (id, data) => {
-  const product = await Products.update(data, {
+  const product = await ProductsModel.update(data, {
     where: {
       id,
     },
@@ -42,7 +42,7 @@ const patchProduct = async (id, data) => {
 };
 
 const deleteProduct = async (id) => {
-  const data = await Products.destroy({
+  const data = await ProductsModel.destroy({
     where: {
       id,
     },
