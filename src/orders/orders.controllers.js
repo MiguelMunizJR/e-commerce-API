@@ -11,13 +11,16 @@ const getAllOrders = async (userId) => {
       userId: userId,
     },
     attributes: {
-      exclude: ["productId"],
+      exclude: ["productId", "userId"],
     },
     include: {
       model: ProductsModel,
-      // through: OrderProductModel,
       as: "products",
-      attributes: ["id", "title", "price", "description", "category"],
+      attributes: ["id", "title", "category", "image"],
+      through: {
+        as: "order_details",
+        attributes: ["quantity", "total"]
+      }
     },
   });
   return orders;
@@ -64,8 +67,8 @@ const createOrder = async (userId, cartId) => {
       id: UUID.v4(),
       orderId: order?.id,
       productId: product?.id,
-      quantity: cart?.products?.length,
-      price: cart?.total,
+      quantity: product?.cart_products?.quantity,
+      total: product?.price * product?.cart_products?.quantity,
     }));
 
     // Agregamos productos a la nueva orden

@@ -7,7 +7,6 @@ const getAllOrders = (req, res) => {
     .then((response) => {
       res.status(200).json({
         userId: userId,
-        length: response.length,
         orders: response,
       });
     })

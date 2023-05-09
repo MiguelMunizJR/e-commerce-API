@@ -31,7 +31,7 @@ const OrderProduct = db.define("order_products", {
     type: Datatypes.INTEGER,
     allowNull: false,
   },
-  price: {
+  total: {
     type: Datatypes.FLOAT,
     allowNull: false,
   },

@@ -12,12 +12,8 @@ router
     passport.authenticate("jwt", { session: false }),
     adminValidate,
     usersServices.getAllUsers
-  )
-  .post(
-    passport.authenticate("jwt", { session: false }),
-    adminValidate,
-    usersServices.createUser
   );
+  
 //TODO /api/v1/users/me
 router
   .route("/me")
