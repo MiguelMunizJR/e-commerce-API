@@ -18,6 +18,9 @@ const getUserById = async (id) => {
       id,
       status: "active",
     },
+    attributes: {
+      exclude: ["createdAt", "updatedAt", "password", "role", "status"]
+    }
   });
   return user;
 };

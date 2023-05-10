@@ -23,10 +23,6 @@ const Cart = db.define(
       type: Datatypes.FLOAT,
       defaultValue: 0
     },
-    status: {
-      type: Datatypes.ENUM("open", "closed"),
-      defaultValue: "open",
-    },
   },
   {
     timestamps: false,

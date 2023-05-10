@@ -33,11 +33,12 @@ router
 //TODO /api/v1/users/:id
 router
   .route("/:id")
-  .get(
-    passport.authenticate("jwt", { session: false }),
-    adminValidate,
-    usersServices.getUserById
-  )
+  //! Pending fix attributes
+  // .get(
+  //   passport.authenticate("jwt", { session: false }),
+  //   adminValidate,
+  //   usersServices.getUserById
+  // )
   .patch(
     passport.authenticate("jwt", { session: false }),
     adminValidate,

@@ -8,11 +8,11 @@ const getCart = async (userId) => {
   // Buscamos el carrito del usuario actual
   let cart = await CartModel.findOne({
     where: { userId },
-    attributes: ["id", "userId", "total", "status"],
+    attributes: ["id", "userId", "total"],
     include: {
       model: ProductsModel,
       as: "products",
-      attributes: ["id", "title", "price", "description", "category", "image"],
+      attributes: ["id", "title", "price", "category", "image"],
       through: {
         as: "quantity",
         attributes: ["quantity"],
@@ -23,8 +23,7 @@ const getCart = async (userId) => {
   if (!cart) {
     cart = await CartModel.create({
       id: UUID.v4(),
-      userId,
-      status: "open",
+      userId
     });
   }
   let total = 0;
@@ -42,16 +41,14 @@ const addProductToCart = async (userId, productId, quantity) => {
   // Verificar si el usuario ya tiene un carrito abierto
   let cart = await CartModel.findOne({
     where: {
-      userId,
-      status: "open",
+      userId
     },
   });
   // Si el usuario no tiene un carrito, creamos uno nuevo
   if (!cart) {
     cart = await CartModel.create({
       id: UUID.v4(),
-      userId,
-      status: "open",
+      userId
     });
   }
   // Verificar si el producto existe

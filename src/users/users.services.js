@@ -141,7 +141,7 @@ const patchMyUser = (req, res) => {
   const id = req.user.id;
   const { email, password, firstName, lastName, birthday, phone, gender } = req.body;
 
-  if (firstName && lastName && email && password) {
+  if (firstName || lastName || birthday || phone || gender) {
     usersControllers
       .patchUser(id, {
         email,
@@ -171,9 +171,8 @@ const patchMyUser = (req, res) => {
   } else {
     res.status(400).json({
       message: "Missing data",
+      description: "You need to update at least one of the following parameters",
       fields: {
-        email: "string",
-        password: "string",
         firstName: "string",
         lastName: "string",
         birthday: "YYYY-MM-DD",
