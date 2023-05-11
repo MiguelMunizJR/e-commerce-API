@@ -37,7 +37,7 @@ const createUser = (req, res) => {
   const { email, password, firstName, lastName, birthday, phone, gender } =
     req.body;
 
-  if ((email, password)) {
+  if (email, password) {
     usersControllers
       .createUser({
         email,
@@ -123,7 +123,8 @@ const deleteUser = (req, res) => {
     });
 };
 
-//? My User
+//TODO My User Section
+
 const getMyUser = (req, res) => {
   const id = req.user.id;
 
@@ -170,8 +171,7 @@ const patchMyUser = (req, res) => {
       });
   } else {
     res.status(400).json({
-      message: "Missing data",
-      description: "You need to update at least one of the following parameters",
+      message: "Missing data: You need to update at least one of the following parameters.",
       fields: {
         firstName: "string",
         lastName: "string",
@@ -187,7 +187,7 @@ const deleteMyUser = (req, res) => {
   const id = req.user.id;
 
   usersControllers
-    .patchUser(id, { status: "inactive" })
+    .deleteUser(id)
     .then(() => {
       res.status(200).json({
         message: "Your user was deleted succesfully!",
