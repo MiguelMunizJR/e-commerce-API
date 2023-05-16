@@ -7,7 +7,11 @@ const getAllProducts = async () => {
 };
 
 const getProductById = async (id) => {
-  const data = await ProductsModel.findOne({ where: id });
+  const data = await ProductsModel.findOne({ 
+    where: {
+      id
+    }
+  });
   return data;
 };
 

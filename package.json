@@ -14,7 +14,7 @@
   "devDependencies": {
     "@eslint/create-config": "0.4.2",
     "eslint": "8.38.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "2.0.22"
   },
   "dependencies": {
     "bcrypt": "5.1.0",
