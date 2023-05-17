@@ -71,6 +71,8 @@ const createOrder = async (userId, cartId) => {
       total: product?.price * product?.cart_products?.quantity,
     }));
 
+    // return orderProducts;
+
     // Agregamos productos a la nueva orden
     await OrderProductModel.bulkCreate(orderProducts);
 
