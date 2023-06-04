@@ -45,7 +45,7 @@ const createOrder = async (userId, cartId) => {
   if (cart?.id !== cartId) return;
 
   const date = moment().tz("America/Mexico_city");
-  const formattedDate = date.format("YYYY-MM-DD HH:mm:ss");
+  const formattedDate = date.format("YYYY-MM-DD h:mm:ss A");
 
   // Creamos una nueva orden
   if (cart?.products?.length !== 0) {
