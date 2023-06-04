@@ -5,6 +5,7 @@ const OrderProductModel = require("../models/orders_products.model");
 const ProductsModel = require("../models/products.model");
 
 const moment = require("moment");
+require("moment-timezone");
 const UUID = require("uuid");
 
 const getAllOrders = async (userId) => {
@@ -43,7 +44,7 @@ const createOrder = async (userId, cartId) => {
 
   if (cart?.id !== cartId) return;
 
-  const date = moment();
+  const date = moment().tz("America/Mexico_city");
   const formattedDate = date.format("YYYY-MM-DD HH:mm:ss");
 
   // Creamos una nueva orden
