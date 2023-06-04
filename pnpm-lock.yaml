@@ -16,6 +16,9 @@ dependencies:
   jsonwebtoken:
     specifier: 9.0.0
     version: 9.0.0
+  moment:
+    specifier: 2.29.4
+    version: 2.29.4
   passport:
     specifier: 0.6.0
     version: 0.6.0

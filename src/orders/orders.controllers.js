@@ -3,6 +3,8 @@ const CartModel = require("../models/cart.model");
 const CartProductsModel = require("../models/cart_products.model");
 const OrderProductModel = require("../models/orders_products.model");
 const ProductsModel = require("../models/products.model");
+
+const moment = require("moment");
 const UUID = require("uuid");
 
 const getAllOrders = async (userId) => {
@@ -41,16 +43,8 @@ const createOrder = async (userId, cartId) => {
 
   if (cart?.id !== cartId) return;
 
-  const date = new Date();
-  // Obtener la fecha actual en string sin la zona horaria
-  const dateWithoutTimeZone = date.toISOString().slice(0, 10).replace("T", " ");
-
-  // Obtener la hora actual en string sin la zona horaria
-  const timeWithoutTimeZone = date.toLocaleTimeString([], {
-    hour12: true,
-  });
-
-  const formattedDate = `${dateWithoutTimeZone} ${timeWithoutTimeZone}`;
+  const date = moment();
+  const formattedDate = date.format("YYYY-MM-DD HH:mm:ss");
 
   // Creamos una nueva orden
   if (cart?.products?.length !== 0) {
