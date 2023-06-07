@@ -1,8 +1,6 @@
 const Products = require("../../models/products.model");
 const UUID = require("uuid");
 
-// WalkMAnrt :D
-
 const productsSmartTV = [
   {
     id: UUID.v4(),
@@ -85,8 +83,6 @@ const productsSmartTV = [
     image: "https://i.postimg.cc/ZqJWzKYT/TV-LG-55-Pulgadas-4-K-Ultra.webp"
   },
 ];
-
-Products.bulkCreate(productsSmartTV);
 
 const productsLaptops = [
   {
@@ -171,8 +167,6 @@ const productsLaptops = [
   },
 ];
 
-Products.bulkCreate(productsLaptops);
-
 const productsSmartphones = [
   {
     id: UUID.v4(),
@@ -256,4 +250,10 @@ const productsSmartphones = [
   },
 ];
 
-Products.bulkCreate(productsSmartphones);
+const products = [...productsLaptops, ...productsSmartTV, ...productsSmartphones];
+
+// const compareRandom = () => {
+//   return Math.random() - 0.5;
+// };
+
+// Products.bulkCreate(products.sort(compareRandom));

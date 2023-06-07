@@ -7,10 +7,10 @@ const getAllProducts = async () => {
 };
 
 const getProductById = async (id) => {
-  const data = await ProductsModel.findOne({ 
+  const data = await ProductsModel.findOne({
     where: {
-      id
-    }
+      id,
+    },
   });
   return data;
 };
