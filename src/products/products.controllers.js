@@ -3,7 +3,7 @@ const UUID = require("uuid");
 
 const getAllProducts = async () => {
   const data = await ProductsModel.findAll();
-  return data;
+  return data.sort(() => Math.random() - .5);
 };
 
 const getProductById = async (id) => {
