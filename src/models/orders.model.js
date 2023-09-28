@@ -24,7 +24,7 @@ const Orders = db.define(
       },
     },
     status: {
-      type: Datatypes.ENUM("pending", "completed"),
+      type: Datatypes.STRING(10),
       allowNull: false,
       defaultValue: "pending",
     },

@@ -252,8 +252,9 @@ const productsSmartphones = [
 
 const products = [...productsLaptops, ...productsSmartTV, ...productsSmartphones];
 
-// const compareRandom = () => {
-//   return Math.random() - 0.5;
-// };
+const compareRandom = () => {
+  return Math.random() - 0.5;
+};
 
-// Products.bulkCreate(products.sort(compareRandom));
+const productsF = products.sort(compareRandom);
+Products.bulkCreate(productsF);
